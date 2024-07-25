@@ -31,8 +31,8 @@
 \begin{itemize}
       \item We are concerned that low quality imputed genotypes may not work for family based analysis.
       % not all imputed genotypes are bad its more lower quality imputed genotypes might be bad.
-      \item There are some papers that even made headlines in news that used low quality imputed SNPs. % that could be problamatic.
       \item E.g.: Howe et.al (2022) Sib-GWAS paper used low quality imputed SNPs in its analysis. % Than may be an issue.
+      \item They use hard-calls data for SNPs with info score \(> 0.3\).
       \item Initially, I was focused only on the imputed data. I exteneded one of the Tammy's analysis to the whole genome.
 \end{itemize}
 
@@ -146,7 +146,7 @@
 \begin{frame}{Dosages vs. Hard-Calls Genotypes}
 
       \begin{itemize}
-            \item Imputation methods gives us for each SNP a discrete probablity distribution.
+            \item Imputation methods gives us for each SNP a discrete probablity distribution on 3 points.
             % the third one would be determined when we know the first two because like any other probability disribution the sum is 1.
             \item If we get the expectation of those probabilities we call it dosages. % so we have the probaliblity of the genotype at some SNP to be zero 
             % and we have the probability of it to be 1 and to be 2 if we get the expecation we have dosages:
@@ -212,6 +212,19 @@
 % if we gather all those results and draw it as a function of info score we can see the trend more clearly 
 % we have the mean of all those 280 plots on this plot all together.
 
+
+% if we put all these 
+% The correlation decreases as the info score decreases below one
+% This is ture for both dosages and hard calls for both siblings and parent-offspring pairs.
+% the drop in correlation is much steeper for hard calls. 
+% remember Howe etal used Hard call and the situation is worse for hard calls
+
+% both dosages and hard calls exihibit this behavior and this is not what we expect them and it is worse
+% for hard calls than dosages
+
+% and parent-offspring pairs & siblings pairs are basically the same for dosages
+% but it is worse for parent-offspring pairs when using hard-calls
+
 \begin{frame}{Mean Genotype Correlation}{As a function of Info Score}
 
       \centering
@@ -239,9 +252,17 @@
 \[
       Corr(G_i, G_j | IBD = 0) = 0
 \]
+
+% the same for one parent but different from the other parent
+
 \[
       Corr(G_i, G_j | IBD = 1) = 0.5
-\] 
+\]
+
+% when IBD is 2 it means that in that part of the genome both paternal & maternal side of
+% the genome is the same for that siblings pairs. So they are inheriting the same from both parents.
+
+
 \[
       Corr(G_i, G_j | IBD = 2) = 1
 \]
@@ -250,29 +271,30 @@
 \end{frame}
 
 
-\begin{frame}{Correlations Dist. Conditional on IBD states}{Low Quality SNP - Full Siblings - Dosages - IBD = 0}
 
-\begin{figure}
 
-      \includegraphics[width= .85\textwidth]{fig/DS-0-i30.png}
-      % \includegraphics[width= .3\textwidth]{fig/DS-0-i75.png}
-      % \includegraphics[width= .3\textwidth]{fig/DS-0-i99.png}
+% \begin{frame}{Correlations Dist. Conditional on IBD states}{Low Quality SNP - Full Siblings - Dosages - IBD = 0}
+
+% \begin{figure}
+
+%       \includegraphics[width= .85\textwidth]{fig/DS-0-i30.png}
       
-\end{figure}
+% \end{figure}
 
-\end{frame}
+% \end{frame}
 
-\begin{frame}{Correlations Dist. Conditional on IBD states}{Low Quality SNP - Full Siblings - Dosages - IBD = 1}
 
-\begin{figure}
 
-      \includegraphics[width= .85\textwidth]{fig/DS-1-i30.png}
-      % \includegraphics[width= .3\textwidth]{fig/DS-1-i75.png}
-      % \includegraphics[width= .3\textwidth]{fig/DS-1-i99.png}
+
+% \begin{frame}{Correlations Dist. Conditional on IBD states}{Low Quality SNP - Full Siblings - Dosages - IBD = 1}
+
+% \begin{figure}
+
+%       \includegraphics[width= .85\textwidth]{fig/DS-1-i30.png}
       
-\end{figure}
+% \end{figure}
 
-\end{frame}
+% \end{frame}
 
 
 
@@ -282,8 +304,6 @@
 \begin{figure}
 
       \includegraphics[width= .85\textwidth]{fig/DS-2-i30.png}
-      % \includegraphics[width= .3\textwidth]{fig/DS-2-i75.png}
-      % \includegraphics[width= .3\textwidth]{fig/DS-2-i99.png}
       
 \end{figure}
 
@@ -291,109 +311,106 @@
 
 
 
-% \begin{frame}{Distributions Conditional on IBD states}{Full Siblings - Hard Calls - IBD = 0}
-
-% \begin{figure}
-
-%       \includegraphics[width= .3\textwidth]{fig/HC-0-i30.png}
-%       \includegraphics[width= .3\textwidth]{fig/HC-0-i75.png}
-%       \includegraphics[width= .3\textwidth]{fig/HC-0-i99.png}
-      
-% \end{figure}
-
-% \end{frame}
-
-
-% \begin{frame}{Distributions Conditional on IBD states}{Full Siblings - Hard Calls - IBD = 1}
-
-% \begin{figure}
-
-%       \includegraphics[width= .3\textwidth]{fig/HC-1-i30.png}
-%       \includegraphics[width= .3\textwidth]{fig/HC-1-i75.png}
-%       \includegraphics[width= .3\textwidth]{fig/HC-1-i99.png}
-      
-% \end{figure}
-
-% \end{frame}
-
-
-% \begin{frame}{Distributions Conditional on IBD states}{Full Siblings - Hard Calls - IBD = 2}
-
-% \begin{figure}
-
-%       \includegraphics[width= .3\textwidth]{fig/HC-2-i30.png}
-%       \includegraphics[width= .3\textwidth]{fig/HC-2-i75.png}
-%       \includegraphics[width= .3\textwidth]{fig/HC-2-i99.png}
-      
-% \end{figure}
-
-% \end{frame}
+% We would expect to these correlation to be 0 but as 
+% the info score decreseas below zero the correlation deviates more from zero. 
+% unlike overall trend here the situation is worse for dosages than hard-calls
 
 \begin{frame}{Mean Genotypes (info score)}{IBD = 0}
 
-\begin{figure}
+      \begin{figure}
 
-      \includegraphics[width= .85\textwidth]{fig/mean_gt_by_ibd_0.png}
-      
-\end{figure}
+            \includegraphics[width= .85\textwidth]{fig/mean_gt_by_ibd_0.png}
+            
+      \end{figure}
 
 \end{frame}
+
 
 
 \begin{frame}{Mean Genotypes (info score)}{IBD = 1}
 
-\begin{figure}
+      \begin{figure}
 
-      \includegraphics[width= .85\textwidth]{fig/mean_gt_by_ibd_1.png}
-      
-\end{figure}
+            \includegraphics[width= .85\textwidth]{fig/mean_gt_by_ibd_1.png}
+            
+      \end{figure}
 
 \end{frame}
+
+
+% ibd 2 is not used in sib-gwas because we are using genotype differences between siblings so 
+% IBD should not contribute because they are identical and there is no difference, 
+% but here we are showing is that that IBD2 state is not identical between pairs for quality SNPs
+% when we are using low quality SNPs. The situation here is worse for hard calls.
+% so becuase they are not identical these IBD2 is going to contribute to Sib-Gwas estimate and it shouldn't be
+% it shouldn't contribute at all 
 
 
 \begin{frame}{Mean Genotypes (info score)}{IBD = 2}
 
-\begin{figure}
+      \begin{figure}
 
-      \includegraphics[width= .85\textwidth]{fig/mean_gt_by_ibd_2.png}
-      
-\end{figure}
+            \includegraphics[width= .85\textwidth]{fig/mean_gt_by_ibd_2.png}
+            
+      \end{figure}
 
 \end{frame}
+
+
 
 
 \begin{frame}{Mean Genotypes (info score)}
 
-\begin{figure}
+      \begin{figure}
 
-      \includegraphics[width= .85\textwidth]{fig/mean_gt_by_ibd.png}
-      
-\end{figure}
+            \includegraphics[width= .85\textwidth]{fig/mean_gt_by_ibd.png}
+            
+      \end{figure}
 
 \end{frame}
+
+
 
 
 
 \section{WGS Data \& UKB RAP}
 
 
-\begin{frame}{WGS Data}
 
-\begin{itemize}
-      \item UKB has released whole genome sequencing (WGS) data
-       on 30th November 2023 from half a million volunteers.
-       \item First they released 200K version in 2021.
-\end{itemize}
-
-\begin{figure}
-      \includegraphics[width = \textwidth]{fig/sc1.png}
-\end{figure}
+\begin{frame}{Why We Need WGS Data?}
       
 
-
+      \begin{itemize}
+            \item We showed that imputed data doesn't have the expcted properties for the family based analysis.
+            because the correlation deviates from the theoretical expectations. % and this is ture for both parent-offspring
+            % and sibling pairs for both dosages and hard-calls data
+            \item What we are concerned and don't understand is that what is the downstream consequences of this problem is for 
+            family based GWAS.
+            \item Ideally, we would compare the imputed genotypes with true genotypes so we can get some idea what are 
+            the downstream consequences might be on Sib-GWAS. 
+            % so we are going to use the whole genome sequencing data in the UKB and comparing that to the IMPUTED data
+      \end{itemize}
 
 
 \end{frame}
+
+
+
+\begin{frame}{WGS Data}
+
+      \begin{itemize}
+            \item UKB has released whole genome sequencing (WGS) data
+            on 30th November 2023 from half a million volunteers.
+            \item First they released 200K version in 2021.
+      \end{itemize}
+
+      \begin{figure}
+            \includegraphics[width = \textwidth]{fig/sc1.png}
+      \end{figure}
+      
+
+\end{frame}
+
 
 
 \begin{frame}{UKB-RAP Setup}
@@ -417,6 +434,7 @@
 \end{frame}
 
 
+
 \begin{frame}{How to access WGS Data}
 
       \begin{itemize}
@@ -430,7 +448,7 @@
             personal profile to get access to WGS data.
             \item You provide the application ID and you should select data bundles you need.
             \item Tabular data and bulk data files
-            \item Addiotional bulk data files for individula level data later. It takes about 1 or 2 days to dispense data to your project.
+            \item \textit{Addtionall bulk data} files for individula level data later. It takes about 1 or 2 days to dispense data to your project.
       \end{itemize}
 
 \end{frame}
@@ -439,18 +457,28 @@
 \begin{frame}{Some Important Things}
 
       \begin{itemize}
-            \item Billing: I am using the the \pounds 40 to get an estimation then I would 
-            transfer billing to SSGAC.
+            \item Billing: You can used the the \pounds 40 first then you should transfer billing to SSGAC. 
             \item WGS Individual level data is in this path:
-            \\yourproject:/Bulk/DRAGEN WGS/Whole genome variant call files (VCFs) (DRAGEN) [500k release]/10/
+            \\yourproject:/Bulk/DRAGEN WGS/Whole genome variant call files (VCFs) (DRAGEN) [500k release]
             \item Will PLINK or BGEN versions be released?
             \\ PLINK 2.0 and BGEN versions for both the DRAGEN and GraphTyper joint variant calls are planned to
             be released in 2024.
+      \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Some Important Things (cont'd)}
+
+      \begin{itemize}
+            \item Use TABIX for now with VCF Files. It is much faster than plink2 for VCF files when
+            it is used with .tbi index.
             \item CAUTION: Individual IDs are getting randomized for each application ID.
             You might get results that are compeletly random if you don't know this.
       \end{itemize}
 
 \end{frame}
+
 
 
 \begin{frame}{Next Step}
@@ -466,12 +494,14 @@
 \end{frame}
 
 
-\begin{frame}
+\begin{frame}[plain]
 
-      \centering
-      \huge{Thank You for your Attention!} \\ 
+      \huge{Thank You for your Attention!} \\
+      % thank you everyone
       % thank you jon for the code review and thank you Alex for your valuable comments and feedbacks in previous days.
-      \huge{Please Provide me with FEEDBACKS!}
+      % thank you everyone for your attention.
+      \vspace{.5in}
+      \Large{Please Provide me with FEEDBACKS!}
 
 \end{frame}
 
